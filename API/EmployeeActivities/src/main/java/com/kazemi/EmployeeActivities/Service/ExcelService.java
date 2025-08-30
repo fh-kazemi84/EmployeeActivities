@@ -20,6 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 @Service
 public class ExcelService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ExcelService.class);
     private Workbook workbook;
     private Sheet sheet;
     private String filePath;
@@ -177,7 +178,7 @@ public class ExcelService {
             }
 
         } catch (Exception e) {
-            // خطاهای gradient نادیده گرفته می‌شود
+            logger.warn("Failed to read gradient from styles.xml", e);
         }
         return null;
     }
