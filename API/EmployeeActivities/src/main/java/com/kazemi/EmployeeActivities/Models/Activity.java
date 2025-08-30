@@ -25,7 +25,7 @@ import java.util.Date;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "date", nullable = false)
     private Date date;
