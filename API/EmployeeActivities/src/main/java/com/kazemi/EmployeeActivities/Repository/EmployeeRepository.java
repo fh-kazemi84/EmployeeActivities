@@ -13,4 +13,13 @@ import java.util.List;
  **/
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+
+    @Query("SELECT e FROM Employee e " +
+            "WHERE LOWER(e.firstName) LIKE LOWER(CONCAT('%', :name, '%')) " +
+            "OR LOWER(e.lastName) LIKE LOWER(CONCAT('%', :name, '%')) " +
+            "OR LOWER(CONCAT(e.firstName, ' ', e.lastName)) LIKE LOWER(CONCAT('%', :name, '%')) " +
+            "OR LOWER(CONCAT(e.firstName, e.lastName)) LIKE LOWER(CONCAT('%', :name, '%')) " +
+            "OR LOWER(CONCAT(e.lastName, ' ', e.firstName)) LIKE LOWER(CONCAT('%', :name, '%')) " +
+            "OR LOWER(CONCAT(e.lastName, e.firstName)) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Employee> findByName(@Param("name") String name);
 }
