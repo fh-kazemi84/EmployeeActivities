@@ -32,6 +32,11 @@ public class EmployeeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/search")
+    public List<Employee> searchByName(@RequestParam String name) {
+        return employeeService.getByName(name);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee createEmployee(@RequestBody Employee employee) {
