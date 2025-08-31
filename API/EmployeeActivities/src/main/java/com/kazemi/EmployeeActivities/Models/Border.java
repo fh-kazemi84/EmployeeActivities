@@ -1,6 +1,8 @@
 package com.kazemi.EmployeeActivities.Models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -8,10 +10,9 @@ import lombok.Setter;
  **/
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Border {
-    private String borderTop;
-    private String borderBottom;
-    private String borderLeft;
-    private String borderRight;
+    private String borderStyle;
     private Integer borderColor;
 }
