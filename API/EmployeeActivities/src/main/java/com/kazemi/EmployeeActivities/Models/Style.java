@@ -2,6 +2,7 @@ package com.kazemi.EmployeeActivities.Models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 /**
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
  **/
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Style {
     private Integer foregroundColor;
