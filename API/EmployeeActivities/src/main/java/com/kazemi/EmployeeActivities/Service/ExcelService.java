@@ -29,7 +29,7 @@ public class ExcelService {
 
     public void load(String filePath, String sheetName) throws Exception {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new IllegalArgumentException("There is no file!");
         }
 
@@ -38,17 +38,17 @@ public class ExcelService {
         this.workbook = new XSSFWorkbook(fileInputStream);
         this.sheet = workbook.getSheet(sheetName);
 
-        if (this.sheet == null){
+        if (this.sheet == null) {
             throw new IllegalArgumentException("Sheet  " + sheetName + " not found");
         }
     }
 
-    public CellInfo readCell(String cellAddress){
+    public CellInfo readCell(String cellAddress) {
         validateWorkbookAndSheet();
 
         CellReference cellReference = new CellReference(cellAddress);
         Cell cell = getCell(cellReference);
-        if (cell == null){
+        if (cell == null) {
             return null;
         }
 
@@ -155,7 +155,7 @@ public class ExcelService {
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(zipFile.getInputStream(stylesEntry));
             doc.getDocumentElement().normalize();
 
-            int fillId = (int)((XSSFCellStyle) cell.getCellStyle()).getCoreXf().getFillId();
+            int fillId = (int) ((XSSFCellStyle) cell.getCellStyle()).getCoreXf().getFillId();
             NodeList fills = doc.getElementsByTagName("fill");
             if (fillId >= fills.getLength()) return null;
 
@@ -208,10 +208,8 @@ public class ExcelService {
     private Border getBorder(XSSFCellStyle xssfStyle) {
         Border border = new Border();
 
-        border.setBorderTop(xssfStyle.getBorderTop() != BorderStyle.NONE ? "THICK" : null);
-        border.setBorderBottom(xssfStyle.getBorderBottom() != BorderStyle.NONE ? "THICK" : null);
-        border.setBorderLeft(xssfStyle.getBorderLeft() != BorderStyle.NONE ? "THICK" : null);
-        border.setBorderRight(xssfStyle.getBorderRight() != BorderStyle.NONE ? "THICK" : null);
+        String borderStyle = extractBorderStyle(xssfStyle);
+        border.setBorderStyle(borderStyle);
 
         Integer borderColor = extractBorderColor(xssfStyle);
         border.setBorderColor(borderColor);
@@ -219,16 +217,29 @@ public class ExcelService {
         return border;
     }
 
+    private String extractBorderStyle(XSSFCellStyle xssfStyle) {
+        BorderStyle[] borderStyles = {
+                xssfStyle.getBorderTop(),
+                xssfStyle.getBorderBottom(),
+                xssfStyle.getBorderLeft(),
+                xssfStyle.getBorderRight()
+        };
+        for (BorderStyle b : borderStyles) {
+            if (b != BorderStyle.THICK) {
+                return "THICK";
+            }
+        }
+        return null;
+    }
+
     private Integer extractBorderColor(XSSFCellStyle xssfStyle) {
         int targetColor = 16750848; // r=255, g=153, b=0
-
         XSSFColor[] colors = {
                 xssfStyle.getTopBorderXSSFColor(),
                 xssfStyle.getBottomBorderXSSFColor(),
                 xssfStyle.getLeftBorderXSSFColor(),
                 xssfStyle.getRightBorderXSSFColor()
         };
-
         for (XSSFColor c : colors) {
             if (c != null && c.getRGB() != null) {
                 int intColor = rgbBytesToInt(c.getRGB());
