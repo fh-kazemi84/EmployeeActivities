@@ -1,6 +1,8 @@
 package com.kazemi.EmployeeActivities.Models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -8,6 +10,8 @@ import lombok.Setter;
  **/
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Gradient {
     private Integer gradientStartColor;
     private Integer gradientStopColor;
