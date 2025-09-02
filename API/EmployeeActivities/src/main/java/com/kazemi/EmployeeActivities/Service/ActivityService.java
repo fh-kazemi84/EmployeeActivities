@@ -40,45 +40,64 @@ public class ActivityService {
     }
 
     private boolean matches(Style style, Style ruleStyle) {
-        if (ruleStyle == null || style == null) return false;
-
-        // ForegroundColor
-        if (ruleStyle.getForegroundColor() != null &&
-                !ruleStyle.getForegroundColor().equals(style.getForegroundColor())) {
+        if (ruleStyle == null || style == null){
             return false;
         }
 
-        // Pattern
-        if (ruleStyle.getPattern() != null &&
-                !ruleStyle.getPattern().equals(style.getPattern())) {
+        return matchesForegroundColor(style, ruleStyle)
+                && matchesPattern(style, ruleStyle)
+                && matchesGradient(style, ruleStyle)
+                && matchesBorder(style, ruleStyle);
+    }
+
+    private boolean matchesForegroundColor(Style style, Style ruleStyle) {
+        return ruleStyle.getForegroundColor() == null ||
+                ruleStyle.getForegroundColor().equals(style.getForegroundColor());
+    }
+
+    private boolean matchesPattern(Style style, Style ruleStyle) {
+        return ruleStyle.getPattern() == null ||
+                ruleStyle.getPattern().equals(style.getPattern());
+    }
+
+    private boolean matchesGradient(Style style, Style ruleStyle) {
+        if (ruleStyle.getGradient() == null){
+            return true;
+        }
+        if (style.getGradient() == null){
             return false;
         }
 
-        // Gradient
-        if (ruleStyle.getGradient() != null) {
-            if (style.getGradient() == null) return false;
-            if (ruleStyle.getGradient().getGradientStopColor() != null &&
-                    !ruleStyle.getGradient().getGradientStopColor()
-                            .equals(style.getGradient().getGradientStopColor())) {
-                return false;
-            }
-            if (ruleStyle.getGradient().getGradientDegree() != style.getGradient().getGradientDegree()) {
-                return false;
-            }
+        Gradient ruleGradient = ruleStyle.getGradient();
+        Gradient actualGradient = style.getGradient();
+
+        if (ruleGradient.getGradientStopColor() != null &&
+                !ruleGradient.getGradientStopColor().equals(actualGradient.getGradientStopColor())) {
+            return false;
         }
 
-        // Border
-        if (ruleStyle.getBorder() != null) {
-            if (style.getBorder() == null) return false;
-            if (ruleStyle.getBorder().getBorderColor() != null &&
-                    !ruleStyle.getBorder().getBorderColor()
-                            .equals(style.getBorder().getBorderColor())) {
-                return false;
-            }
-            if (ruleStyle.getBorder().getBorderStyle() != null &&
-                    !ruleStyle.getBorder().getBorderStyle().equals(style.getBorder().getBorderStyle())) {
-                return false;
-            }
+        return ruleGradient.getGradientDegree() == actualGradient.getGradientDegree();
+    }
+
+    private boolean matchesBorder(Style style, Style ruleStyle) {
+        if (ruleStyle.getBorder() == null) {
+            return true;
+        }
+        if (style.getBorder() == null) {
+            return false;
+        }
+
+        Border ruleBorder = ruleStyle.getBorder();
+        Border actualBorder = style.getBorder();
+
+        if (ruleBorder.getBorderColor() != null &&
+                !ruleBorder.getBorderColor().equals(actualBorder.getBorderColor())) {
+            return false;
+        }
+
+        if (ruleBorder.getBorderStyle() != null &&
+                !ruleBorder.getBorderStyle().equals(actualBorder.getBorderStyle())) {
+            return false;
         }
 
         return true;
