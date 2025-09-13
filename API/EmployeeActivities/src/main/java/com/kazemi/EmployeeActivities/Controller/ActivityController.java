@@ -1,5 +1,6 @@
 package com.kazemi.EmployeeActivities.Controller;
 
+import com.kazemi.EmployeeActivities.DTO.ActivityDTO;
 import com.kazemi.EmployeeActivities.Model.Activity;
 import com.kazemi.EmployeeActivities.Service.ActivityService;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,10 @@ public class ActivityController {
         this.activityService = activityService;
     }
 
-    @GetMapping("/get-activity")
-    public Activity readCell(@RequestParam String filePath,
-                             @RequestParam String sheet,
-                             @RequestParam String cell) throws Exception {
+    @GetMapping("/get")
+    public ActivityDTO getActivity(@RequestParam String filePath,
+                                   @RequestParam String sheet,
+                                   @RequestParam String cell) throws Exception {
         return activityService.getActivity(filePath, sheet, cell);
     }
 
