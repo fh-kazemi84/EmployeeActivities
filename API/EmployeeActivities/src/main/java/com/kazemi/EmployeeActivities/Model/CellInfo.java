@@ -1,4 +1,4 @@
-package com.kazemi.EmployeeActivities.Models;
+package com.kazemi.EmployeeActivities.Model;
 
 import lombok.Getter;
 import lombok.Setter;

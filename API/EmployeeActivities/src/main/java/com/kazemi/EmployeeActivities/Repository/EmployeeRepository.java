@@ -1,6 +1,6 @@
 package com.kazemi.EmployeeActivities.Repository;
 
-import com.kazemi.EmployeeActivities.Models.Employee;
+import com.kazemi.EmployeeActivities.Model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

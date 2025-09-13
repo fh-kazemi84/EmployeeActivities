@@ -1,6 +1,5 @@
-package com.kazemi.EmployeeActivities.Models;
+package com.kazemi.EmployeeActivities.Model;
 
-import com.kazemi.EmployeeActivities.Models.Enums.ActivityType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,8 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StyleRule {
-    private Style style;
-    private ActivityType type;
+public class Gradient {
+    private Integer gradientStartColor;
+    private Integer gradientStopColor;
+    private double gradientDegree;
 }

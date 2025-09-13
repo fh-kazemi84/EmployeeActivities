@@ -1,4 +1,4 @@
-package com.kazemi.EmployeeActivities.Models;
+package com.kazemi.EmployeeActivities.Model;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.kazemi.EmployeeActivities.Controller;
 
-import com.kazemi.EmployeeActivities.Models.Employee;
+import com.kazemi.EmployeeActivities.Model.Employee;
 import com.kazemi.EmployeeActivities.Service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

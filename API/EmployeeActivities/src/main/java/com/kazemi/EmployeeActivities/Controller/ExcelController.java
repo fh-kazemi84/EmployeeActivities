@@ -1,6 +1,6 @@
 package com.kazemi.EmployeeActivities.Controller;
 
-import com.kazemi.EmployeeActivities.Models.CellInfo;
+import com.kazemi.EmployeeActivities.Model.CellInfo;
 import com.kazemi.EmployeeActivities.Service.ExcelService;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
 package com.kazemi.EmployeeActivities.Service;
 
-import com.kazemi.EmployeeActivities.Models.Employee;
+import com.kazemi.EmployeeActivities.Model.Employee;
 import com.kazemi.EmployeeActivities.Repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
