@@ -62,9 +62,14 @@ public class ExcelService {
     }
 
     private Cell getCell(CellReference cellReference) {
-        Row row = sheet.getRow(cellReference.getRow());
+        Row row = getRow(cellReference.getRow());
         if (row == null) return null;
         return row.getCell(cellReference.getCol());
+    }
+
+    public Row getRow(int rowIndex) {
+        validateWorkbookAndSheet();
+        return sheet.getRow(rowIndex);
     }
 
     private CellInfo buildCellInfo(CellReference cellReference, Cell cell) {
@@ -91,7 +96,7 @@ public class ExcelService {
         sheet = null;
     }
 
-    private String getCellContent(Cell cell) {
+    public String getCellContent(Cell cell) {
         if (cell == null) return null;
         return switch (cell.getCellType()) {
             case STRING -> cell.getStringCellValue();
