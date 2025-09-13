@@ -1,9 +1,8 @@
-package com.kazemi.EmployeeActivities.Models;
+package com.kazemi.EmployeeActivities.Model;
 
-import com.kazemi.EmployeeActivities.Models.Enums.ActivityType;
+import com.kazemi.EmployeeActivities.Model.Enums.ActivityType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
