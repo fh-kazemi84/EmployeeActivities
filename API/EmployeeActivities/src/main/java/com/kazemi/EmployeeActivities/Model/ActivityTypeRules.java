@@ -1,6 +1,6 @@
-package com.kazemi.EmployeeActivities.Models;
+package com.kazemi.EmployeeActivities.Model;
 
-import com.kazemi.EmployeeActivities.Models.Enums.ActivityType;
+import com.kazemi.EmployeeActivities.Model.Enums.ActivityType;
 
 import java.util.List;
 
