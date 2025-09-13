@@ -1,7 +1,6 @@
 package com.kazemi.EmployeeActivities.Controller;
 
 import com.kazemi.EmployeeActivities.DTO.ActivityDTO;
-import com.kazemi.EmployeeActivities.Model.Activity;
 import com.kazemi.EmployeeActivities.Service.ActivityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
