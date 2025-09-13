@@ -257,4 +257,10 @@ public class ActivityService {
         }
         return numbersOfMonth;
     }
+
+    public ActivityDTO getActivityByEmployeeNameAndDate(String name, Date date) {
+        Activity activity = activityRepository.findByEmployeeNameAndDate(name, date)
+                .orElseThrow(() -> new RuntimeException("Activity not found for " + name + " on " + date));
+        return mapper.toDto(activity);
+    }
 }

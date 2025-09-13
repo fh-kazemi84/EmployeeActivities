@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author fh.kazemi
@@ -31,4 +32,17 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
                         @Param("content") String content,
                         @Param("comment") String comment,
                         @Param("type") String type);
+
+    @Query("SELECT a FROM Activity a " +
+            "WHERE (" +
+            "LOWER(a.employee.firstName) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
+            "LOWER(a.employee.lastName) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
+            "LOWER(CONCAT(a.employee.firstName, ' ', a.employee.lastName)) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
+            "LOWER(CONCAT(a.employee.firstName, a.employee.lastName)) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
+            "LOWER(CONCAT(a.employee.lastName, ' ', a.employee.firstName)) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
+            "LOWER(CONCAT(a.employee.lastName, a.employee.firstName)) LIKE LOWER(CONCAT('%', :name, '%'))" +
+            ") AND a.date = :date")
+    Optional<Activity> findByEmployeeNameAndDate(@Param("name") String name, @Param("date") Date date);
+
 }
+
