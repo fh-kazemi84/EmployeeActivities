@@ -37,6 +37,7 @@ public class Activity {
     private String comment;
 
     @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private ActivityType type;
 
     @ManyToOne
