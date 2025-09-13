@@ -1,4 +1,4 @@
-package com.kazemi.EmployeeActivities.Models.Enums;
+package com.kazemi.EmployeeActivities.Model.Enums;
 
 /**
  * @author fh.kazemi
