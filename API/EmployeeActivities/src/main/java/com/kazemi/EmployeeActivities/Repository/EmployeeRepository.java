@@ -22,4 +22,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             "OR LOWER(CONCAT(e.lastName, ' ', e.firstName)) LIKE LOWER(CONCAT('%', :name, '%')) " +
             "OR LOWER(CONCAT(e.lastName, e.firstName)) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Employee> findByName(@Param("name") String name);
+
+    List<Employee> findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 }
