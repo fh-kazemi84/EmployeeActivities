@@ -1,7 +1,7 @@
 package com.kazemi.EmployeeActivities.Service;
 
-import com.kazemi.EmployeeActivities.Models.*;
-import com.kazemi.EmployeeActivities.Models.Enums.ActivityType;
+import com.kazemi.EmployeeActivities.Model.*;
+import com.kazemi.EmployeeActivities.Model.Enums.ActivityType;
 import com.kazemi.EmployeeActivities.Repository.ActivityRepository;
 import com.kazemi.EmployeeActivities.Repository.EmployeeRepository;
 import org.apache.poi.ss.usermodel.Cell;
