@@ -1,5 +1,7 @@
 package com.kazemi.EmployeeActivities.Service;
 
+import com.kazemi.EmployeeActivities.DTO.ActivityDTO;
+import com.kazemi.EmployeeActivities.Mapper.ActivityMapper;
 import com.kazemi.EmployeeActivities.Model.*;
 import com.kazemi.EmployeeActivities.Model.Enums.ActivityType;
 import com.kazemi.EmployeeActivities.Repository.ActivityRepository;
@@ -23,18 +25,21 @@ import java.util.List;
 public class ActivityService {
 
     private final ExcelService excelService;
+    private final ActivityMapper mapper;
     private final EmployeeRepository employeeRepository;
     private final ActivityRepository activityRepository;
 
     public ActivityService(ExcelService excelService,
+                           ActivityMapper activityMapper,
                            EmployeeRepository employeeRepository,
                            ActivityRepository activityRepository) {
         this.excelService = excelService;
+        this.mapper = activityMapper;
         this.employeeRepository = employeeRepository;
         this.activityRepository = activityRepository;
     }
 
-    public Activity getActivity(String filePath, String sheetName, String cellAddress) throws Exception {
+    public ActivityDTO getActivity(String filePath, String sheetName, String cellAddress) throws Exception {
         excelService.load(filePath, sheetName);
         CellInfo cellInfo = excelService.readCell(cellAddress);
         excelService.close();
@@ -46,7 +51,7 @@ public class ActivityService {
         activity.setComment(cellInfo.getComment());
         activity.setType(activityType);
 
-        return activity;
+        return mapper.toDto(activity);
     }
 
     public ActivityType detectActivityType(Style style) {
