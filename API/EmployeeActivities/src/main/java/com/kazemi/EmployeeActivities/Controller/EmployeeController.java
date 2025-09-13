@@ -1,5 +1,6 @@
 package com.kazemi.EmployeeActivities.Controller;
 
+import com.kazemi.EmployeeActivities.DTO.EmployeeDTO;
 import com.kazemi.EmployeeActivities.Model.Employee;
 import com.kazemi.EmployeeActivities.Service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -21,31 +22,33 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAll() {
+    public List<EmployeeDTO> getAll() {
         return employeeService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getById(@PathVariable Integer id) {
-        return employeeService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<EmployeeDTO> getById(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(employeeService.getById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/search")
-    public List<Employee> searchByName(@RequestParam String name) {
+    public List<EmployeeDTO> searchByName(@RequestParam String name) {
         return employeeService.getByName(name);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.save(employee);
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDto) {
+        return employeeService.save(employeeDto);
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-        return employeeService.update(id, updatedEmployee);
+    public EmployeeDTO updateEmployee(@PathVariable Integer id, @RequestBody EmployeeDTO employeeDto) {
+        return employeeService.update(id, employeeDto);
     }
 
     @DeleteMapping("/{id}")
