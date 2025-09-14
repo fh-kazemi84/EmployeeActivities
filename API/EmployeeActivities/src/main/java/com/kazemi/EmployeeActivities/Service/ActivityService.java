@@ -263,4 +263,9 @@ public class ActivityService {
                 .orElseThrow(() -> new RuntimeException("Activity not found for " + name + " on " + date));
         return mapper.toDto(activity);
     }
+
+    public List<ActivityDTO> getActivitiesByEmployeeNameAndMonth(String name, int month) {
+        List<Activity> activities = activityRepository.findByEmployeeNameAndMonth(name, month);
+        return mapper.toDtoList(activities);
+    }
 }

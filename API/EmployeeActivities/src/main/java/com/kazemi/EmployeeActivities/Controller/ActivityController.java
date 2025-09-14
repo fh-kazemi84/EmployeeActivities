@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author fh.kazemi
@@ -44,5 +45,16 @@ public class ActivityController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/searchByNameAndMonth")
+    public ResponseEntity<List<ActivityDTO>> getActivitiesByNameAndMonth(
+            @RequestParam String name,
+            @RequestParam int month) {
+        List<ActivityDTO> activities = activityService.getActivitiesByEmployeeNameAndMonth(name, month);
+        if (activities.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(activities);
     }
 }
