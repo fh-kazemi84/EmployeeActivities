@@ -1,7 +1,9 @@
 package com.kazemi.EmployeeActivities.Repository;
 
 import com.kazemi.EmployeeActivities.Model.Activity;
+import com.kazemi.EmployeeActivities.Specification.ActivitySpecifications;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,13 +11,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
  * @author fh.kazemi
  **/
 @Repository
-public interface ActivityRepository extends JpaRepository<Activity, Integer> {
+public interface ActivityRepository extends
+        JpaRepository<Activity, Integer>,
+        JpaSpecificationExecutor<Activity> {
 
     @Modifying
     @Transactional
@@ -33,16 +38,9 @@ public interface ActivityRepository extends JpaRepository<Activity, Integer> {
                         @Param("comment") String comment,
                         @Param("type") String type);
 
-    @Query("SELECT a FROM Activity a " +
-            "WHERE (" +
-            "LOWER(a.employee.firstName) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
-            "LOWER(a.employee.lastName) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
-            "LOWER(CONCAT(a.employee.firstName, ' ', a.employee.lastName)) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
-            "LOWER(CONCAT(a.employee.firstName, a.employee.lastName)) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
-            "LOWER(CONCAT(a.employee.lastName, ' ', a.employee.firstName)) LIKE LOWER(CONCAT('%', :name, '%')) OR " +
-            "LOWER(CONCAT(a.employee.lastName, a.employee.firstName)) LIKE LOWER(CONCAT('%', :name, '%'))" +
-            ") AND a.date = :date")
-    Optional<Activity> findByEmployeeNameAndDate(@Param("name") String name, @Param("date") Date date);
+    default Optional<Activity> findByEmployeeNameAndDate(String name, Date date) {
+        return findOne(ActivitySpecifications.hasEmployeeNameAndDate(name, date));
+    }
 
 }
 
