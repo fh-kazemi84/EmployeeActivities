@@ -22,10 +22,10 @@ public class ActivityController {
     }
 
     @GetMapping("/get")
-    public ActivityDTO getActivity(@RequestParam String filePath,
-                                   @RequestParam String sheet,
-                                   @RequestParam String cell) throws Exception {
-        return activityService.getActivity(filePath, sheet, cell);
+    public ActivityDTO getCellActivity(@RequestParam String filePath,
+                                       @RequestParam String sheet,
+                                       @RequestParam String cellAddress) throws Exception {
+        return activityService.getCellActivity(filePath, sheet, cellAddress);
     }
 
     @PostMapping("/import")

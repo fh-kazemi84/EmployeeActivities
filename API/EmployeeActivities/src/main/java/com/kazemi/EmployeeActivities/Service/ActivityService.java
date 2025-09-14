@@ -39,7 +39,7 @@ public class ActivityService {
         this.activityRepository = activityRepository;
     }
 
-    public ActivityDTO getActivity(String filePath, String sheetName, String cellAddress) throws Exception {
+    public ActivityDTO getCellActivity(String filePath, String sheetName, String cellAddress) throws Exception {
         excelService.load(filePath, sheetName);
         CellInfo cellInfo = excelService.readCell(cellAddress);
         excelService.close();
