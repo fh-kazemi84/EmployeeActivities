@@ -25,13 +25,13 @@ public interface ActivityRepository extends
     @Modifying
     @Transactional
     @Query(value = """
-        INSERT INTO activity (employee_id, date, content, comment, type)
-        VALUES (:employeeId, :date, :content, :comment, :type)
-        ON DUPLICATE KEY UPDATE 
-            content = VALUES(content),
-            comment = VALUES(comment),
-            type = VALUES(type)
-        """, nativeQuery = true)
+            INSERT INTO activity (employee_id, date, content, comment, type)
+            VALUES (:employeeId, :date, :content, :comment, :type)
+            ON DUPLICATE KEY UPDATE 
+                content = VALUES(content),
+                comment = VALUES(comment),
+                type = VALUES(type)
+            """, nativeQuery = true)
     void upsertActivity(@Param("employeeId") Integer employeeId,
                         @Param("date") Date date,
                         @Param("content") String content,
@@ -42,5 +42,8 @@ public interface ActivityRepository extends
         return findOne(ActivitySpecifications.hasEmployeeNameAndDate(name, date));
     }
 
+    default List<Activity> findByEmployeeNameAndMonth(String name, int month) {
+        return findAll(ActivitySpecifications.hasEmployeeNameAndMonth(name, month));
+    }
 }
 
