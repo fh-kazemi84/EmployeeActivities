@@ -1,0 +1,18 @@
+# === Java / Spring Boot ===
+*.class
+*.jar
+*.war
+*.iml
+*.log
+target/
+bin/
+out/
+
+# === VS Code ===
+.vscode/
+
+# === Node / Angular ===
+node_modules/
+dist/
+npm-debug.log*
+package-lock.json
