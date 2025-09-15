@@ -1,6 +1,7 @@
 package com.kazemi.EmployeeActivities.Controller;
 
 import com.kazemi.EmployeeActivities.DTO.ActivityDTO;
+import com.kazemi.EmployeeActivities.Model.Activity;
 import com.kazemi.EmployeeActivities.Service.ActivityService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +57,14 @@ public class ActivityController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(activities);
+    }
+
+    @PostMapping("/upsert")
+    public ResponseEntity<ActivityDTO> upsertActivity(
+            @RequestParam Integer employeeId,
+            @RequestBody ActivityDTO activityDTO) {
+        Activity updatedActivity = activityService.upsertActivity(activityDTO, employeeId);
+        ActivityDTO resultDto = activityService.getMapper().toDto(updatedActivity);
+        return ResponseEntity.ok(resultDto);
     }
 }
