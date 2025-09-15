@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellReference;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -37,6 +38,10 @@ public class ActivityService {
         this.mapper = activityMapper;
         this.employeeRepository = employeeRepository;
         this.activityRepository = activityRepository;
+    }
+
+    public ActivityMapper getMapper() {
+        return mapper;
     }
 
     public ActivityDTO getCellActivity(String filePath, String sheetName, String cellAddress) throws Exception {
@@ -199,7 +204,7 @@ public class ActivityService {
                 ActivityType type = detectActivityType(cellInfo.getStyle());
 
                 // Skip saving NORMAL activities to reduce redundant data
-                if(type != ActivityType.NORMAL){
+                if (type != ActivityType.NORMAL) {
                     LocalDate local = LocalDate.of(year, month, col);
                     Date date = java.sql.Date.valueOf(local);
 
@@ -267,5 +272,25 @@ public class ActivityService {
     public List<ActivityDTO> getActivitiesByEmployeeNameAndMonth(String name, int month) {
         List<Activity> activities = activityRepository.findByEmployeeNameAndMonth(name, month);
         return mapper.toDtoList(activities);
+    }
+
+    @Transactional
+    public Activity upsertActivity(ActivityDTO activityDTO, Integer employeeId) {
+
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + employeeId));
+
+        Activity activity = mapper.toEntity(activityDTO);
+        activity.setEmployee(employee);
+
+        activityRepository.upsertActivity(
+                employee.getId(),
+                activity.getDate(),
+                activity.getContent(),
+                activity.getComment(),
+                activity.getType().name()
+        );
+
+        return activity;
     }
 }
